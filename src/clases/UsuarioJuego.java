@@ -1,5 +1,6 @@
 package clases;
 
+import formularios.FrmJuego;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -76,11 +77,9 @@ public class UsuarioJuego {
                 u = data.split(",");
                 if(u[0].equals(claveMurci(usuario)) && u[2].equals(claveMurci(contraseña))){
                     isLogin = true;
-                    //FrmJuego2 juego = new FrmJuego2();
-                    //juego.setLocationRelativeTo(null);
+                    FrmJuego juego = new FrmJuego();
                     JOptionPane.showMessageDialog(null, "A jugar");
-                    //juego.setVisible(true);
-                    break;
+                    //break;
                     
                 }
             }

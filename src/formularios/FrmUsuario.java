@@ -5,10 +5,14 @@
  */
 package formularios;
 
+import clases.Hilos;
+import clases.Reloj2;
 import clases.UsuarioJuego;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -20,14 +24,23 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class FrmUsuario extends javax.swing.JFrame {
 
     File archivo;
+    Reloj2 reloj = new Reloj2();
     
-    public FrmUsuario() {
+    public FrmUsuario() throws Exception {
         initComponents();
+        
+        reloj.setLblReloj(lblReloj);
+        reloj.start();
+        
         lblReloj.setBackground(Color.black);
         lblReloj.setOpaque(true);
         
         jLabel4.setVisible(false);
         pass2Txt.setVisible(false);
+        
+        String mensaje = "BIENVENIDO AL JUEGO DE MEMORIA SDOM UMG";
+        Hilos texto = new Hilos(mensaje, 300, lblTexto, new JLabel());
+        texto.start();
     }
 
     @SuppressWarnings("unchecked")
@@ -38,6 +51,8 @@ public class FrmUsuario extends javax.swing.JFrame {
         lblUMG = new javax.swing.JLabel();
         lblMenu = new javax.swing.JLabel();
         lblReloj = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lblTexto = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lblImage = new javax.swing.JLabel();
         mailTxt = new javax.swing.JTextField();
@@ -55,8 +70,6 @@ public class FrmUsuario extends javax.swing.JFrame {
 
         PanelMenu.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblUMG.setIcon(new javax.swing.ImageIcon("D:\\OneDrive - Universidad Mariano Gálvez\\U\\4to Semestre\\2 - Programacion II\\Primer Parcial\\umg.png")); // NOI18N
-
         lblMenu.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblMenu.setText("Nuevo Usuario");
 
@@ -67,39 +80,55 @@ public class FrmUsuario extends javax.swing.JFrame {
         lblReloj.setText("00:00:00");
         lblReloj.setBorder(new javax.swing.border.MatteBorder(null));
 
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/umg.png"))); // NOI18N
+
+        lblTexto.setText("jLabel6");
+
         javax.swing.GroupLayout PanelMenuLayout = new javax.swing.GroupLayout(PanelMenu);
         PanelMenu.setLayout(PanelMenuLayout);
         PanelMenuLayout.setHorizontalGroup(
             PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMenuLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(lblUMG)
                 .addGroup(PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelMenuLayout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(lblMenu)
-                        .addContainerGap(178, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMenuLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(lblUMG))
+                    .addGroup(PanelMenuLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5)))
+                .addGroup(PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelMenuLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblMenu)
+                        .addGap(60, 60, 60)
                         .addComponent(lblReloj)
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(PanelMenuLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lblTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         PanelMenuLayout.setVerticalGroup(
             PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMenuLayout.createSequentialGroup()
-                .addGroup(PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblReloj)
-                    .addGroup(PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelMenuLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(lblUMG))
-                        .addGroup(PanelMenuLayout.createSequentialGroup()
-                            .addGap(46, 46, 46)
-                            .addComponent(lblMenu))))
+                .addContainerGap()
+                .addGroup(PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelMenuLayout.createSequentialGroup()
+                        .addComponent(lblUMG)
+                        .addContainerGap(157, Short.MAX_VALUE))
+                    .addGroup(PanelMenuLayout.createSequentialGroup()
+                        .addGroup(PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblMenu)
+                            .addComponent(lblReloj))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))))
+            .addGroup(PanelMenuLayout.createSequentialGroup()
+                .addComponent(jLabel5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        lblImage.setIcon(new javax.swing.ImageIcon("D:\\OneDrive - Universidad Mariano Gálvez\\U\\4to Semestre\\2 - Programacion II\\Memoria\\MemoryGame\\pinwi.png")); // NOI18N
+        lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinwi.png"))); // NOI18N
         lblImage.setToolTipText("Haga clic para cargar una imagen");
         lblImage.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         lblImage.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -172,7 +201,7 @@ public class FrmUsuario extends javax.swing.JFrame {
                                     .addComponent(mailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(pass1Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(pass2Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,7 +210,6 @@ public class FrmUsuario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblImage)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(usuarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -262,7 +290,11 @@ public class FrmUsuario extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
-        new FrmMenu().setVisible(true);
+        try {
+            new FrmMenu().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -314,7 +346,11 @@ public class FrmUsuario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmUsuario().setVisible(true);
+                try {
+                    new FrmUsuario().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(FrmUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -327,10 +363,12 @@ public class FrmUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblMenu;
     private javax.swing.JLabel lblReloj;
+    private javax.swing.JLabel lblTexto;
     private javax.swing.JLabel lblUMG;
     private javax.swing.JTextField mailTxt;
     private javax.swing.JPasswordField pass1Txt;

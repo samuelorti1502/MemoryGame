@@ -11,6 +11,7 @@ import java.awt.font.*;
 import java.util.Random;
 
 import java.util.ResourceBundle;
+
 public class Hilos extends Thread {
     int contador;
     private String cadena;
