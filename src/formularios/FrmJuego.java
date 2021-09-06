@@ -1,9 +1,9 @@
 package formularios;
-package clases;
+
+//package clases;
 
 import clases.Reloj2;
 import clases.TableroMemoria;
-import formularios.FrmLogin;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -12,25 +12,63 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class FrmJuego {
 
     private JFrame ventana;
     private JPanel panelPresentacion, panelJuego;
-    private int numFilas = 8, numCol = 8, contador, temp, temp2, f1, c1, f2, c2;
+    private int numFilas = 8, numCol = 8, contador, temp, temp2, f1, c1, f2, c2, miliseg, seg, min;
     private int matriz[][], matrizAux[][];
-    JLabel fondo, titulo, lblReloj, lblNombre, lblCasillas[][];
+    JLabel fondo, titulo, lblReloj, lblNombre, lblCasillas[][], lblTiempo;
     private ImageIcon Img;
     private Icon icono;
-    
+    Thread hilo;
+    boolean estado;
+
     Reloj2 reloj = new Reloj2();
     TableroMemoria tablero = new TableroMemoria();
     FrmLogin usuario = new FrmLogin();
 
     public FrmJuego() {
         ventana();
+    }
+
+    public void tempo(JLabel lblTiempo) {
+        estado = true;
+
+        hilo = new Thread() {
+            public void run() {
+                for (;;) {
+                    if (estado == true) {
+                        try {
+                            sleep(1);
+                            if (miliseg >= 1000) {
+                                miliseg = 0;
+                                seg++;
+                            }
+                            if (seg >= 60) {
+                                miliseg = 0;
+                                seg = 0;
+                                min++;
+                            }
+                            if (min >= 60) {
+                                miliseg = 0;
+                                seg = 0;
+                                min = 0;
+                            }
+                            lblTiempo.setText(((min <= 9) ? "0" + min : min) + ":" + (seg <= 9 ? "0" + seg : seg));
+                            miliseg++;
+                        } catch (Exception e) {
+
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        };
+        hilo.start();
     }
 
     public void ventana() {
@@ -74,40 +112,53 @@ public class FrmJuego {
         titulo.setVisible(true);
         panelPresentacion.add(titulo, 0);
         // </editor-fold>  
-        
+
         dibujarCasillas();
-        
+
         // <editor-fold defaultstate="collapsed" desc="Reloj">    
         lblReloj = new JLabel();
         lblReloj.setSize(95, 40);
         lblReloj.setLocation(5, 700);
-        
+
         reloj.setLblReloj(lblReloj);
         reloj.start();
-        
+
         lblReloj.setFont(new java.awt.Font("Segoe UI", 0, 18));
         lblReloj.setForeground(new java.awt.Color(102, 255, 0));
         lblReloj.setBackground(Color.black);
         lblReloj.setOpaque(true);
-        
+
         lblReloj.setVisible(true);
         panelPresentacion.add(lblReloj, 0);
         // </editor-fold>  
-        
+
         // <editor-fold defaultstate="collapsed" desc="Nombre">    
         lblNombre = new JLabel();
         lblNombre.setText(usuario.getUsuario());
         lblNombre.setSize(95, 40);
         lblNombre.setLocation(5, 20);
         lblNombre.setBackground(Color.black);
-        lblReloj.setForeground(Color.white);
+        lblNombre.setForeground(Color.white);
         lblNombre.setOpaque(true);
-        
+
         lblNombre.setVisible(true);
         panelPresentacion.add(lblNombre, 0);
-        
-        // </editor-fold>  
 
+        // </editor-fold>  
+        // <editor-fold defaultstate="collapsed" desc="Tiempo">    
+        lblTiempo = new JLabel();
+        lblTiempo.setSize(95, 40);
+        lblTiempo.setLocation(700, 20);
+        lblTiempo.setBackground(Color.black);
+        lblTiempo.setForeground(Color.white);
+        lblTiempo.setOpaque(true);
+
+        tempo(lblTiempo);
+
+        lblTiempo.setVisible(true);
+        panelPresentacion.add(lblTiempo, 0);
+
+        // </editor-fold>  
         ventana.setVisible(true);
     }
 
@@ -248,7 +299,7 @@ public class FrmJuego {
 
     public void btnClick() {
         matriz = tablero.getMataleatorio();
-        
+
         for (JLabel[] matriz1 : lblCasillas) {
             for (JLabel matriz11 : matriz1) {
                 matriz11.addMouseListener(new MouseAdapter() {
@@ -270,7 +321,7 @@ public class FrmJuego {
                                         c2 = l;
                                         //contador = 0;
                                     }
-                                    voltearCasilla(k,l);
+                                    voltearCasilla(k, l);
                                 }
                             }
                         }
@@ -287,10 +338,12 @@ public class FrmJuego {
                                         lblCasillas[f1][c1].setIcon(null);
                                         lblCasillas[f2][c2].setIcon(null);
                                         System.out.println("Match");
-                                    }/*else{
-                                        Img = new ImageIcon("./src/main/java/images/0.png");
-                                        matriz[k][l].setIcon(Img);
-                                    }*/
+                                    } else {
+                                        Img = new ImageIcon("./src/images/0.png");
+                                        icono = new ImageIcon(Img.getImage().getScaledInstance(70, 75,
+                                                Image.SCALE_DEFAULT));
+                                        lblCasillas[k][l].setIcon(icono);
+                                    }
 
                                 }
                             }
@@ -307,7 +360,7 @@ public class FrmJuego {
     public void voltearCasilla(int fil, int col) {
         matrizAux = tablero.getMatAux();
         matriz = tablero.getMataleatorio();
-        
+
         matrizAux[fil][col] = matriz[fil][col];
         Img = new ImageIcon("./src/images/" + matrizAux[fil][col] + ".png");
         icono = new ImageIcon(Img.getImage().getScaledInstance(70, 75,

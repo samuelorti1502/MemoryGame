@@ -3,6 +3,7 @@ package formularios;
 import clases.Hilos;
 import clases.Reloj2;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,21 +15,21 @@ import javax.swing.JLabel;
 public class FrmMenu extends javax.swing.JFrame {
 
     Reloj2 reloj = new Reloj2();
-    
+
     public FrmMenu() throws Exception {
         initComponents();
-        
+
         reloj.setLblReloj(lblReloj);
         reloj.start();
-        
+
         lblReloj.setBackground(Color.black);
         lblReloj.setOpaque(true);
-        
+
         String mensaje = "BIENVENIDO AL JUEGO DE MEMORIA SDOM UMG";
         Hilos texto = new Hilos(mensaje, 300, lblTexto, new JLabel());
         texto.start();
-        
-        reglas();
+
+        abrirArchivo("reglas.txt");
     }
 
     @SuppressWarnings("unchecked")
@@ -84,9 +85,19 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jButton3.setText("Ayuda");
         jButton3.setPreferredSize(new java.awt.Dimension(130, 40));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Creditos");
         jButton4.setPreferredSize(new java.awt.Dimension(130, 40));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -192,6 +203,14 @@ public class FrmMenu extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        abrir("Manual de usuario.pdf");
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        new FrmCreditos().setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -245,19 +264,18 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel lblTexto;
     // End of variables declaration//GEN-END:variables
 
-    public void reglas(){
-        File file = new File("reglas.txt");
-        String aux="",
-        texto="";
-        
+    public void abrirArchivo(String archivo) {
+        File file = new File(archivo);
+        String aux = "",
+                texto = "";
+
         try {
-            if(file!=null)
-            { 
-                java.io.FileReader archivos=new java.io.FileReader(file);
-                BufferedReader lee=new BufferedReader(archivos);
+            if (file != null) {
+                java.io.FileReader archivos = new java.io.FileReader(file);
+                BufferedReader lee = new BufferedReader(archivos);
                 try {
-                    while((aux=lee.readLine())!=null){
-                        texto+= aux+ "\n";
+                    while ((aux = lee.readLine()) != null) {
+                        texto += aux + "\n";
                     }
                     lee.close();
                 } catch (IOException ex) {
@@ -267,11 +285,21 @@ public class FrmMenu extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             //Logger.getLogger(Calc.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         RulesTxt.setText(texto);
-        RulesTxt.setColumns (100);
-        RulesTxt.setLineWrap (true);
-        RulesTxt.setWrapStyleWord (false);
+        RulesTxt.setColumns(100);
+        RulesTxt.setLineWrap(true);
+        RulesTxt.setWrapStyleWord(false);
     }
-    
+
+    public void abrir(String archivo) {
+        String dir = ".src/";
+        try {
+            File archive = new File(archivo);
+            Desktop.getDesktop().open(archive);
+        }catch(IOException ex){
+            System.out.println(ex);
+        }
+    }
+
 }
