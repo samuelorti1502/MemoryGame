@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class UsuarioJuego {
 
-    public String usuario;
+    private String usuario;
     public String email;
     public String contraseña1;
     public String contraseña2;
@@ -53,7 +53,7 @@ public class UsuarioJuego {
 
             FileWriter archivo = new FileWriter(file.getAbsoluteFile(), true);
 
-            String texto = claveMurci(usuario) + "," + claveMurci(email) + "," + claveMurci(contraseña1);
+            String texto = claveMurci(getUsuario()) + "," + claveMurci(email) + "," + claveMurci(contraseña1);
 
             PrintWriter imprimir = new PrintWriter(archivo);
             imprimir.println(texto);
@@ -79,8 +79,6 @@ public class UsuarioJuego {
                     isLogin = true;
                     FrmJuego juego = new FrmJuego();
                     JOptionPane.showMessageDialog(null, "A jugar");
-                    //break;
-                    
                 }
             }
             myReader.close();
@@ -90,5 +88,13 @@ public class UsuarioJuego {
         }
         
         return isLogin;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 }

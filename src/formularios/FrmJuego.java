@@ -1,7 +1,9 @@
 package formularios;
+package clases;
 
 import clases.Reloj2;
 import clases.TableroMemoria;
+import formularios.FrmLogin;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -19,12 +21,13 @@ public class FrmJuego {
     private JPanel panelPresentacion, panelJuego;
     private int numFilas = 8, numCol = 8, contador, temp, temp2, f1, c1, f2, c2;
     private int matriz[][], matrizAux[][];
-    JLabel fondo, titulo, lblReloj, lblCasillas[][];
+    JLabel fondo, titulo, lblReloj, lblNombre, lblCasillas[][];
     private ImageIcon Img;
     private Icon icono;
     
     Reloj2 reloj = new Reloj2();
     TableroMemoria tablero = new TableroMemoria();
+    FrmLogin usuario = new FrmLogin();
 
     public FrmJuego() {
         ventana();
@@ -71,23 +74,39 @@ public class FrmJuego {
         titulo.setVisible(true);
         panelPresentacion.add(titulo, 0);
         // </editor-fold>  
-
+        
         dibujarCasillas();
         
+        // <editor-fold defaultstate="collapsed" desc="Reloj">    
         lblReloj = new JLabel();
-        lblReloj.setSize(80, 40);
+        lblReloj.setSize(95, 40);
         lblReloj.setLocation(5, 700);
         
         reloj.setLblReloj(lblReloj);
         reloj.start();
         
-        lblReloj.setFont(new java.awt.Font("Segoe UI", 0, 20));
+        lblReloj.setFont(new java.awt.Font("Segoe UI", 0, 18));
         lblReloj.setForeground(new java.awt.Color(102, 255, 0));
         lblReloj.setBackground(Color.black);
         lblReloj.setOpaque(true);
         
         lblReloj.setVisible(true);
         panelPresentacion.add(lblReloj, 0);
+        // </editor-fold>  
+        
+        // <editor-fold defaultstate="collapsed" desc="Nombre">    
+        lblNombre = new JLabel();
+        lblNombre.setText(usuario.getUsuario());
+        lblNombre.setSize(95, 40);
+        lblNombre.setLocation(5, 20);
+        lblNombre.setBackground(Color.black);
+        lblReloj.setForeground(Color.white);
+        lblNombre.setOpaque(true);
+        
+        lblNombre.setVisible(true);
+        panelPresentacion.add(lblNombre, 0);
+        
+        // </editor-fold>  
 
         ventana.setVisible(true);
     }

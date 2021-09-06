@@ -1,0 +1,12 @@
+Cuando el usuario ingrese a la opción jugar, el programa mostrará un tablero de 8x8 casillas en 
+blanco, ocultas “detrás” de cada casilla se encontrarán 32 pares de imágenes, o sea que, existen 32 
+imágenes que existen 2 veces dentro del tablero de juego, la posición de cada imagen en el tablero 
+será aleatoria, cada vez que el usuario haga clic en una casilla, el programa mostrará la imagen que 
+está escondida “detrás” de la casilla, después de mostrar dos casillas el programa comparará si 
+ambas imágenes son iguales, si lo son, dejará visibles (ya no ocultará) este par de imágenes, de lo 
+contrario, el sistema “ocultará” nuevamente las imágenes.
+El formulario contendrá una etiqueta que mostrará un timer, que dará 3 minutos al jugador para 
+descubrir todas las parejas de imágenes en el tablero, el timer empezará en 03:00 minutos y 
+terminará en 00:00, si el tiempo se agota el juego terminará y mostrará un mensaje: 
+                             ¡Se agotó tu tiempo¡
+                  ***¡Piensa más rápido la próxima vez!**

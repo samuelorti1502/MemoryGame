@@ -302,7 +302,7 @@ public class FrmUsuario extends javax.swing.JFrame {
 
         if (pass1Txt.getText().equals(pass2Txt.getText())) {
             //JOptionPane.showMessageDialog(null, "Son iguales");
-            usuario.usuario = usuarioTxt.getText();
+            usuario.setUsuario(usuarioTxt.getText());
             usuario.email = mailTxt.getText();
             usuario.contraseña1 = pass1Txt.getText();
             usuario.contraseña2 = pass2Txt.getText();

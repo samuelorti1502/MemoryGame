@@ -3,6 +3,10 @@ package formularios;
 import clases.Hilos;
 import clases.Reloj2;
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -23,6 +27,8 @@ public class FrmMenu extends javax.swing.JFrame {
         String mensaje = "BIENVENIDO AL JUEGO DE MEMORIA SDOM UMG";
         Hilos texto = new Hilos(mensaje, 300, lblTexto, new JLabel());
         texto.start();
+        
+        reglas();
     }
 
     @SuppressWarnings("unchecked")
@@ -52,6 +58,7 @@ public class FrmMenu extends javax.swing.JFrame {
         lblReloj.setText("00:00:00");
         lblReloj.setBorder(new javax.swing.border.MatteBorder(null));
 
+        RulesTxt.setEditable(false);
         RulesTxt.setColumns(20);
         RulesTxt.setRows(5);
         jScrollPane1.setViewportView(RulesTxt);
@@ -105,7 +112,7 @@ public class FrmMenu extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         lblMenu.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -152,28 +159,36 @@ public class FrmMenu extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addComponent(lblReloj))
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 288, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(175, 175, 175)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(175, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(150, Short.MAX_VALUE)))
         );
 
-        setSize(new java.awt.Dimension(738, 609));
+        setSize(new java.awt.Dimension(738, 570));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        new FrmUsuario().setVisible(true);
+        try {
+            // TODO add your handling code here:
+            new FrmUsuario().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new FrmLogin().setVisible(true);
+        try {
+            new FrmLogin().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -229,4 +244,34 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel lblReloj;
     private javax.swing.JLabel lblTexto;
     // End of variables declaration//GEN-END:variables
+
+    public void reglas(){
+        File file = new File("reglas.txt");
+        String aux="",
+        texto="";
+        
+        try {
+            if(file!=null)
+            { 
+                java.io.FileReader archivos=new java.io.FileReader(file);
+                BufferedReader lee=new BufferedReader(archivos);
+                try {
+                    while((aux=lee.readLine())!=null){
+                        texto+= aux+ "\n";
+                    }
+                    lee.close();
+                } catch (IOException ex) {
+                    //Logger.getLogger(Calc.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            //Logger.getLogger(Calc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        RulesTxt.setText(texto);
+        RulesTxt.setColumns (100);
+        RulesTxt.setLineWrap (true);
+        RulesTxt.setWrapStyleWord (false);
+    }
+    
 }
